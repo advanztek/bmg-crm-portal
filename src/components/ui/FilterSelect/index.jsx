@@ -1,21 +1,32 @@
 import { radiusTokens } from "@/constants/theme";
 import { useColor } from "@/contexts/color";
-import { Box } from "@mui/material";
+import { Stack } from "@mui/material";
 import { CircleRegular, DismissFilled } from "@fluentui/react-icons";
 import { TriggerButton } from "@/components/ui";
+import { Dropdown } from "@/components/shared";
+import { useState } from "react";
 
 /**
+ * @template TItem
  * @param {Object} props
  * @param {import("@/types/global.d.js").FilterLabel} props.label
  * @param {string} props.value
  * @param {(value: string) => void} props.onChange
+ * @param {TItem[]} props.items
+ * @param {(item: TItem) => { label: string; value: string }} props.renderItem
+ * @param {(value: string, item: TItem) => void} props.onSelect
  */
-export default function FilterSelect({ label, value, onChange }) {
+export default function FilterSelect({ label, value, onChange, items, renderItem, onSelect }) {
   const { border, fg } = useColor();
+  const [anchorEl, setAnchorEl] = useState(
+    /** @type {(EventTarget & HTMLDivElement) | null} */ (null),
+  );
+
+  const selectedLabel = items?.map(renderItem).find((mapped) => mapped.value === value)?.label;
+
   return (
-    <Box
-      display="grid"
-      gridTemplateColumns="1fr 1fr auto"
+    <Stack
+      direction="row"
       alignItems="center"
       sx={{
         borderRadius: radiusTokens.md,
@@ -32,7 +43,7 @@ export default function FilterSelect({ label, value, onChange }) {
         label={label.label}
         icon={label.icon}
         br
-        accent={label.accent}
+        accent={fg.tertiary}
         fullWidth
       />
       <TriggerButton
@@ -40,9 +51,10 @@ export default function FilterSelect({ label, value, onChange }) {
         noBorder
         icon={CircleRegular}
         br
-        accent="green"
-        label="Success"
-        onClick={() => console.log("Hey")}
+        accent={fg.tertiary}
+        label={selectedLabel ?? ""}
+        placeholder="Select..."
+        onClick={(e) => setAnchorEl(e.currentTarget)}
         fullWidth
       />
       <TriggerButton
@@ -50,8 +62,20 @@ export default function FilterSelect({ label, value, onChange }) {
         noBorder
         icon={DismissFilled}
         accent={fg.secondary}
-        onClick={() => console.log("Hey")}
+        onClick={() => onChange?.("")}
       />
-    </Box>
+
+      <Dropdown
+        open={Boolean(anchorEl)}
+        anchorEl={anchorEl}
+        onClose={() => setAnchorEl(null)}
+        items={items}
+        renderItem={renderItem}
+        onSelect={(val, item) => {
+          onSelect?.(val, item);
+          setAnchorEl(null);
+        }}
+      />
+    </Stack>
   );
 }

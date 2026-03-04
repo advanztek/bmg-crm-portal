@@ -10,7 +10,7 @@ export const fontSizes = {
 };
 
 export const typefaces = {
-  default: "Roboto",
+  default: "Inter",
 };
 
 export const buttonColors = {
@@ -440,12 +440,14 @@ export const foregroundColors = {
     primary: "#171717",
     secondary: "#737373",
     tertiary: "#9fa2b5",
+    disabled: "#C4C4C4",
     "main-primary": mainColors.light.primary,
   },
   dark: {
     primary: "#F5F5F5",
     secondary: "hsla(0, 0%, 55%, 1)",
-    tertiary: "hsla(0, 0%, 65%, 1)",
+    tertiary: "hsla(0, 0%, 45%, 1)",
+    disabled: "hsla(0, 0%, 35%, 1)",
     "main-primary": mainColors.dark.primary,
   },
 };
@@ -552,7 +554,7 @@ export const menuColors = {
   light: {
     bg: backgroundColors.light.tertiary,
     fg: foregroundColors.light.secondary,
-    border: borderColors.light.tertiary,
+    border: borderColors.light.primary,
   },
   dark: {
     bg: "hsla(0, 0%, 20%, 1)",
@@ -564,12 +566,12 @@ export const menuColors = {
 export const menuItemColors = {
   light: {
     default: {
-      bg: backgroundColors.light.tertiary,
-      fg: foregroundColors.light.secondary,
+      bg: backgroundColors.light.primary,
+      fg: foregroundColors.light.primary,
     },
     hover: {
       bg: mainColors.light.primary,
-      fg: "hsl(0, 0%, 100%)",
+      fg: "#ffffff",
     },
   },
   dark: {

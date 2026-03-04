@@ -5,9 +5,10 @@ import { Box } from "@mui/material";
 /**
  * @param {Object} props
  * @param {string} [props.label]
+ * @param {string} [props.placeholder]
  * @param {string} [props.accent]
  * @param {import("react").ComponentType<{fontSize?: number, color?: string}>} [props.icon]
- * @param {() => void} [props.onClick]
+ * @param {(e: React.MouseEvent<HTMLDivElement>) => void} [props.onClick]
  * @param {keyof typeof radius} [props.round]
  * @param {boolean} [props.noBorder]
  * @param {boolean} [props.br]
@@ -24,8 +25,9 @@ export default function TriggerButton({
   br = false,
   bl = false,
   fullWidth = false,
+  placeholder,
 }) {
-  const { input } = useColor();
+  const { input, fg } = useColor();
 
   const borderStyle = `1px solid ${input.outlined.default.border}`;
 
@@ -37,6 +39,7 @@ export default function TriggerButton({
     <Box
       component="div"
       onClick={onClick}
+      aria-hidden={false}
       sx={{
         display: "flex",
         alignItems: "center",
@@ -60,21 +63,18 @@ export default function TriggerButton({
       }}
     >
       {Icon && <Icon color={accent || input.outlined.default.placeholder} />}
-      {label && (
+      {(label || placeholder) && (
         <Box
           component="span"
           fontWeight={400}
-          color={input.outlined.default.fg}
+          color={placeholder && !label ? fg.disabled : input.outlined.default.fg}
           sx={{
             whiteSpace: "nowrap",
             userSelect: "none",
             lineHeight: 1,
-            display: "flex",
-            alignItems: "center",
-            verticalAlign: "middle",
           }}
         >
-          {label}
+          {label || placeholder}
         </Box>
       )}
     </Box>

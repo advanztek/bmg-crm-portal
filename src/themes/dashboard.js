@@ -492,9 +492,8 @@ function configureTheme({
           root: {
             fontSize: fontSizes.caption,
             lineHeight: 1,
-            fontWeight: 700,
+            fontWeight: 500,
             color: input.outlined.default.fg,
-            // textAlign: "right",
             "& .MuiFormLabel-asterisk": {
               color: main.error,
             },
@@ -505,10 +504,9 @@ function configureTheme({
         styleOverrides: {
           root: {
             fontSize: fontSizes.caption,
-            fontWeight: 400,
+            fontWeight: 500,
             lineHeight: 1,
             color: fg.secondary,
-            // textAlign: "right",
           },
         },
       },
@@ -521,7 +519,6 @@ function configureTheme({
             color: fg.secondary,
             lineHeight: 1,
             fontWeight: 400,
-            // textAlign: "right",
             "&.center": {
               textAlign: "center",
             },
@@ -540,10 +537,14 @@ function configureTheme({
               border: `1px solid ${menu.border}`,
               color: fg.primary,
               borderRadius: radiusTokens.md,
+              padding: spacingTokens.xs,
               boxShadow: "none",
             },
             "& .MuiMenu-list.MuiList-padding.MuiList-root": {
               padding: 0,
+              display: "flex",
+              flexDirection: "column",
+              gap: spacingTokens.xs,
             },
             "& .MuiBackdrop-root.MuiBackdrop-invisible.MuiModal-backdrop": {
               backdropFilter: "none",
@@ -558,8 +559,10 @@ function configureTheme({
             fontSize: fontSizes.body1,
             backgroundColor: menuItem["default"]["bg"],
             color: menuItem["default"]["fg"],
-            padding: "14px 18px",
+            padding: `${spacing[2]} ${spacing[3]}`,
             borderBottom: "none",
+            borderRadius: radius[2],
+            fontWeight: 400,
             "&:hover": {
               backgroundColor: menuItem["hover"]["bg"],
               color: menuItem["hover"]["fg"],

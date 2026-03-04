@@ -1,5 +1,5 @@
 :root {
-  --typeface: "Roboto";
+  --typeface: "Inter";
 }
 .Toastify__toast {
   font-family: var(--typeface), sans-serif;

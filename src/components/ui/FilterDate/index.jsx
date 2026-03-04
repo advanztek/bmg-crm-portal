@@ -1,7 +1,7 @@
 import { radiusTokens } from "@/constants/theme";
 import { useColor } from "@/contexts/color";
-import { Box } from "@mui/material";
-import { CalendarDayRegular, CalendarRegular, DismissFilled } from "@fluentui/react-icons";
+import { Stack } from "@mui/material";
+import { CalendarRegular, DismissFilled } from "@fluentui/react-icons";
 import { useRef } from "react";
 import { TriggerButton } from "@/components/ui";
 
@@ -26,9 +26,8 @@ export default function FilterDate({ from, to, onFromChange, onToChange }) {
   };
 
   return (
-    <Box
-      display="grid"
-      gridTemplateColumns="1fr 1fr auto"
+    <Stack
+      direction="row"
       sx={{
         borderRadius: radiusTokens.md,
         border: `1px solid ${border.primary}`,
@@ -42,9 +41,9 @@ export default function FilterDate({ from, to, onFromChange, onToChange }) {
         round={0}
         noBorder
         label={from || "From"}
-        icon={CalendarDayRegular}
+        icon={CalendarRegular}
         br
-        accent="#5925DC"
+        accent={fg.tertiary}
         onClick={handleFromClick}
         fullWidth
       />
@@ -54,7 +53,7 @@ export default function FilterDate({ from, to, onFromChange, onToChange }) {
         label={to || "To"}
         icon={CalendarRegular}
         br
-        accent="#B54708"
+        accent={fg.tertiary}
         onClick={handleToClick}
         fullWidth
       />
@@ -82,6 +81,6 @@ export default function FilterDate({ from, to, onFromChange, onToChange }) {
         style={{ position: "absolute", opacity: 0, pointerEvents: "none", width: 0, height: 0 }}
         tabIndex={-1}
       />
-    </Box>
+    </Stack>
   );
 }

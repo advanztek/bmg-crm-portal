@@ -36,14 +36,6 @@
  */
 
 /**
- * A single option in a select filter.
- *
- * @typedef {Object} SelectOption
- * @property {string} label - Display label for the option.
- * @property {string} value - Underlying value for the option.
- */
-
-/**
  * Label configuration passed to FilterSelect.
  *
  * @typedef {Object} FilterSelectLabel
@@ -55,11 +47,13 @@
 /**
  * Configuration for a select (dropdown) filter.
  *
+ * @template TItem
  * @typedef {Object} SelectFilterConfig
  * @property {"select"} type - Discriminant for the select filter.
  * @property {string} key - Unique key used to read/write the value in filterValues.
  * @property {FilterSelectLabel} label - Label config passed to FilterSelect.
- * @property {SelectOption[]} options - Available options for the dropdown.
+ * @property {TItem[]} items - Available items for the dropdown.
+ * @property {(item: TItem) => { label: string; value: string }} renderItem - Maps each item to a label/value pair.
  */
 
 /**
@@ -75,7 +69,7 @@
 /**
  * Union of all supported filter configurations.
  *
- * @typedef {SearchFilterConfig | FieldFilterConfig | SelectFilterConfig | DateFilterConfig} FilterConfig
+ * @typedef {SearchFilterConfig | FieldFilterConfig | SelectFilterConfig<any> | DateFilterConfig} FilterConfig
  */
 
 /**

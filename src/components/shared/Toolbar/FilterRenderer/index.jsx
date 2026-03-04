@@ -29,9 +29,11 @@ export default function FilterRenderer({ filter, filterValues, onFilterChange })
       return (
         <FilterSelect
           label={filter.label}
-          //   options={filter.options}
+          items={filter.items}
+          renderItem={filter.renderItem}
           value={filterValues[filter.key] ?? ""}
           onChange={(v) => onFilterChange(filter.key, v)}
+          onSelect={(v) => onFilterChange(filter.key, v)}
         />
       );
 

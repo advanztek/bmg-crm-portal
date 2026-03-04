@@ -44,7 +44,7 @@ export default function AuthLayout() {
             <Box
               component="img"
               src="/logo-icon.png"
-              sx={{ height: "40px" }}
+              sx={{ height: "40px", cursor: "pointer" }}
               onClick={navigateToHome}
             />
           </Stack>

@@ -203,10 +203,9 @@ export default function TasksPage() {
   const [filterValues, setFilterValues] = useState({});
   const [openAdd, setOpenAdd] = useState(false);
 
-  /** @type {import("@/types/global.d").SelectOption[]} */
   const userOptions = [
-    { label: "Alice", value: "alice" },
-    { label: "Bob", value: "bob" },
+    { name: "Alice", id: "alice" },
+    { name: "Bob", id: "bob" },
   ];
 
   /** @type {import("@/types/global.d").FilterConfig[]} */
@@ -217,7 +216,11 @@ export default function TasksPage() {
       type: "select",
       key: "user",
       label: { icon: PersonRegular, label: "Assignee", accent: "#0078D4" },
-      options: userOptions,
+      items: userOptions,
+      renderItem: (user) => ({
+        label: user.name,
+        value: user.id,
+      }),
     },
     { type: "date", fromKey: "dateFrom", toKey: "dateTo" },
   ];
