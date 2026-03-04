@@ -71,6 +71,7 @@ export default function FilterSelect({ label, value, onChange, items, renderItem
         onClose={() => setAnchorEl(null)}
         items={items}
         renderItem={renderItem}
+        selectedValue={value}
         onSelect={(val, item) => {
           onSelect?.(val, item);
           setAnchorEl(null);
