@@ -1,20 +1,34 @@
+import { useNotification } from "@/contexts/notification";
 import { api } from "@/lib/api";
 import { useRequest } from "@/lib/request";
+import { useAuthStore } from "@/store/auth";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
 
 export function useLogin() {
   const qc = useQueryClient();
   const { request } = useRequest();
+  const { setAuth } = useAuthStore.getState();
+  const notify = useNotification();
+  const navigate = useNavigate();
 
-  return useMutation({
+  const { isPending: loading, mutateAsync: login } = useMutation({
     mutationFn: request(async function (/**@type {Record<String, string>}*/ data) {
       const response = await api.post("/auth/login", data);
-      console.log("Login Response ");
-      console.log(response);
-      // return response;
+      const responseData = response.data;
+      if (responseData?.success && responseData?.result?.token) {
+        const result = responseData?.result;
+        setAuth({ user: result?.user, token: result?.token });
+        notify.success("Login successful! 🥳");
+        navigate("/");
+        return;
+      }
+      notify.info("Error occured! Try again. ☺️");
     }),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["profile"] });
     },
   });
+
+  return { loading, login };
 }

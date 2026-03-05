@@ -6,15 +6,14 @@ import { useForm } from "@/lib/form";
 import { rules } from "./lib";
 import { useSearchParams } from "react-router-dom";
 import { useLogin } from "@/queries/auth";
-import { useNotification } from "@/contexts/notification";
+import { filterObj } from "@/helpers/validation";
 
 export default function LoginPage() {
   const [params] = useSearchParams();
   const otpEnabled = params.get("otp_enabled");
 
-  const notify = useNotification();
   const { fg, main } = useColor();
-  const { isPending, mutateAsync } = useLogin();
+  const { loading, login } = useLogin();
 
   const { onBlur, onChange, formData, formErrors, validateForm } = useForm({
     init: {
@@ -26,9 +25,8 @@ export default function LoginPage() {
   });
 
   async function handleSubmit() {
-    notify.error("Something went wrong");
     if (!validateForm()) return;
-    mutateAsync(formData);
+    login(filterObj(formData));
   }
 
   return (
@@ -58,9 +56,10 @@ export default function LoginPage() {
           onChange={(name, value) => onChange(name, value)}
           onBlur={(name, value) => onBlur(name, value)}
           error={(name) => formErrors?.[name]}
+          type="password"
         />
 
-        <Button size="large" loading={isPending} onClick={handleSubmit}>
+        <Button size="large" loading={loading} onClick={handleSubmit}>
           Submit
         </Button>
 

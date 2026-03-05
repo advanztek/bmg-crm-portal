@@ -34,7 +34,7 @@ api.interceptors.response.use(
       clearAuth();
 
       if (window.location.pathname !== "/login") {
-        window.location.replace("/login");
+        window.location.href = "/login";
       }
     }
 

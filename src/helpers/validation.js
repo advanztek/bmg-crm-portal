@@ -33,3 +33,26 @@ export function validatePhoneNumber(number) {
   if (!number) return false;
   return /^\+?[1-9]\d{6,11}$/.test(number);
 }
+
+/**
+ * Filter object to exclude falsy values (keeping false and 0).
+ * @param {Record<string, any>} obj
+ * @returns {Record<string, any>}
+ */
+export function filterObj(obj) {
+  if (!obj) return {};
+  /** @type {any} */
+  const newObj = {};
+
+  for (const [key, value] of Object.entries(obj)) {
+    if (
+      value === false ||
+      value === 0 ||
+      (value && !(Array.isArray(value) && value.length === 0))
+    ) {
+      newObj[key] = value;
+    }
+  }
+
+  return newObj;
+}

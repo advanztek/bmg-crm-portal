@@ -56,7 +56,6 @@ export default function NotificationProvider({ children }) {
     info: (msg, options) => notify(msg, "info", options),
   };
 
-  // 👇 Register the global notifier
   useEffect(() => {
     setNotifier(value);
   }, [value]);

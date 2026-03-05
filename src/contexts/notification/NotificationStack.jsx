@@ -1,3 +1,4 @@
+import { useTheme } from "@mui/material";
 import NotificationItem from "./NotificationItem";
 
 /**
@@ -7,8 +8,10 @@ import NotificationItem from "./NotificationItem";
  * @param {number} props.peekSize
  */
 export default function NotificationStack({ notifications, remove, peekSize = 3 }) {
+  const theme = useTheme();
+
   return (
-    <div className="notification-container">
+    <div className="notification-container" style={{ zIndex: theme.zIndex.appBar }}>
       {notifications.map((n, index) => {
         const visibleIndex = Math.min(index, peekSize - 1);
 

@@ -14,7 +14,7 @@ export default function AuthMiddleware({ children }) {
     if (!token) {
       notify.info("Please login!");
       if (window.location.pathname !== "/login") {
-        window.location.replace("/login");
+        window.location.href = "/login";
       }
     }
   }, [token, window.location.pathname]);
