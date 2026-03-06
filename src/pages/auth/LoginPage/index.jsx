@@ -26,7 +26,7 @@ export default function LoginPage() {
 
   async function handleSubmit() {
     if (!validateForm()) return;
-    login(filterObj(formData));
+    await login(filterObj(formData));
   }
 
   return (

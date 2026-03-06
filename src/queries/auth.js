@@ -32,3 +32,30 @@ export function useLogin() {
 
   return { loading, login };
 }
+
+export function useLogOut() {
+  const qc = useQueryClient();
+  const { request } = useRequest();
+  const { clearAuth } = useAuthStore.getState();
+  const notify = useNotification();
+  const navigate = useNavigate();
+
+  const { isPending: loading, mutateAsync: logOut } = useMutation({
+    mutationFn: request(async function () {
+      const response = await api.post("/auth/logout", {});
+      const responseData = response.data;
+      if (responseData?.success) {
+        clearAuth();
+        notify.success("See you again! 😔");
+        navigate("/login");
+        return "SUCCESS";
+      }
+      notify.info("Error occured! Try again. ☺️");
+    }),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["profile"] });
+    },
+  });
+
+  return { loading, logOut };
+}

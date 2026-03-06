@@ -7,6 +7,8 @@ import { useNavigationMenu } from "@/lib/navigation";
 import { useLocation, useNavigate } from "react-router-dom";
 import { footerHeight, headerHeight } from "./lib";
 import { useColor } from "@/contexts/color";
+import { useLogOut } from "@/queries/auth";
+import { ScreenLoader } from "@/components/ui";
 
 /** @typedef {import("@/types/global.d").NavItem} NavItemProps */
 export default function Sidebar() {
@@ -20,6 +22,8 @@ export default function Sidebar() {
   const { status, theme } = useColor();
 
   const [selected, setSelected] = useState(/** @type {number | null} */ (null));
+
+  const { loading: logoutLoading, logOut } = useLogOut();
 
   /**
    * @param {NavItemProps} item
@@ -40,77 +44,86 @@ export default function Sidebar() {
     navigate(item?.path);
   }
 
+  async function handleLogout() {
+    await logOut();
+  }
+
   return (
-    <Box ref={navRef} sx={{ height: "100svh" }}>
-      <Stack display="flex" alignItems="center" justifyContent="center" height={headerHeight}>
+    <>
+      <Box ref={navRef} sx={{ height: "100svh" }}>
+        <Stack display="flex" alignItems="center" justifyContent="center" height={headerHeight}>
+          <Box
+            component="img"
+            height="25px"
+            src={theme === "dark" ? "/logo-light.png" : "/logo-dark.png"}
+          ></Box>
+        </Stack>
+
         <Box
-          component="img"
-          height="25px"
-          src={theme === "dark" ? "/logo-light.png" : "/logo-dark.png"}
-        ></Box>
-      </Stack>
+          sx={{
+            px: spacingTokens.sm,
+            height: `calc(100svh - (${headerHeight} + ${footerHeight}))`,
+            overflowY: "auto",
+            display: "flex",
+            flexDirection: "column",
+            gap: spacingTokens.xs,
+          }}
+        >
+          {menu.map((item, index) => (
+            <Stack key={index} gap={spacingTokens.xs}>
+              <NavLink
+                nav={item}
+                active={
+                  item.path === pathname ||
+                  item?.sub?.some((subItem) => subItem.path === pathname) ||
+                  false
+                }
+                onNavigate={() => handleNavigation(item, index)}
+                subNavOpen={selected === index}
+              ></NavLink>
 
-      <Box
-        sx={{
-          px: spacingTokens.sm,
-          height: `calc(100svh - (${headerHeight} + ${footerHeight}))`,
-          overflowY: "auto",
-          display: "flex",
-          flexDirection: "column",
-          gap: spacingTokens.xs,
-        }}
-      >
-        {menu.map((item, index) => (
-          <Stack key={index} gap={spacingTokens.xs}>
-            <NavLink
-              nav={item}
-              active={
-                item.path === pathname ||
-                item?.sub?.some((subItem) => subItem.path === pathname) ||
-                false
-              }
-              onNavigate={() => handleNavigation(item, index)}
-              subNavOpen={selected === index}
-            ></NavLink>
+              {item?.sub && item?.sub?.length > 0 && (
+                <Stack
+                  gap={spacingTokens.sm}
+                  sx={{
+                    maxHeight: selected === index ? "500px" : "0px",
+                    overflow: "hidden",
+                    transition: "max-height 0.35s ease-in-out",
+                  }}
+                >
+                  {item?.sub?.map((subItem, subIndex) => (
+                    <NavLink
+                      key={subIndex}
+                      nav={subItem}
+                      active={subItem.path === pathname}
+                      onNavigate={() => handleSubNavigatiion(subItem)}
+                      x={spacingTokens.md}
+                    ></NavLink>
+                  ))}
+                </Stack>
+              )}
+            </Stack>
+          ))}
+        </Box>
 
-            {item?.sub && item?.sub?.length > 0 && (
-              <Stack
-                gap={spacingTokens.sm}
-                sx={{
-                  maxHeight: selected === index ? "500px" : "0px",
-                  overflow: "hidden",
-                  transition: "max-height 0.35s ease-in-out",
-                }}
-              >
-                {item?.sub?.map((subItem, subIndex) => (
-                  <NavLink
-                    key={subIndex}
-                    nav={subItem}
-                    active={subItem.path === pathname}
-                    onNavigate={() => handleSubNavigatiion(subItem)}
-                    x={spacingTokens.md}
-                  ></NavLink>
-                ))}
-              </Stack>
-            )}
-          </Stack>
-        ))}
+        <Stack
+          direction="row"
+          display="flex"
+          alignItems="center"
+          justifyContent="end"
+          height={footerHeight}
+          px={spacingTokens.sm}
+        >
+          <ArrowExitFilled
+            color={status.error.primary}
+            fontSize={20}
+            style={{ cursor: "pointer" }}
+            onClick={handleLogout}
+          ></ArrowExitFilled>
+        </Stack>
       </Box>
 
-      <Stack
-        direction="row"
-        display="flex"
-        alignItems="center"
-        justifyContent="end"
-        height={footerHeight}
-        px={spacingTokens.sm}
-      >
-        <ArrowExitFilled
-          color={status.error.primary}
-          fontSize={20}
-          style={{ cursor: "pointer" }}
-        ></ArrowExitFilled>
-      </Stack>
-    </Box>
+      {logoutLoading && <ScreenLoader open message="Logging out... 🤯" />}
+    </>
   );
 }
