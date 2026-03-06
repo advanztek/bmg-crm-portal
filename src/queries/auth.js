@@ -59,3 +59,49 @@ export function useLogOut() {
 
   return { loading, logOut };
 }
+
+export function useResetPassword() {
+  const qc = useQueryClient();
+  const { request } = useRequest();
+  const notify = useNotification();
+
+  const { isPending: loading, mutateAsync: resetPassword } = useMutation({
+    mutationFn: request(async function (/**@type {Record<String, string>}*/ data) {
+      const response = await api.post("/auth/reset-password", data);
+      const responseData = response.data;
+      if (responseData?.success) {
+        notify.success("Code sent to your email! 🥳");
+        return "SUCCESS";
+      }
+      notify.info("Error occured! Try again. ☺️");
+    }),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["profile"] });
+    },
+  });
+
+  return { loading, resetPassword };
+}
+
+export function useVerifyPasswordReset() {
+  const qc = useQueryClient();
+  const { request } = useRequest();
+  const notify = useNotification();
+
+  const { isPending: loading, mutateAsync: verifyPasswordReset } = useMutation({
+    mutationFn: request(async function (/**@type {Record<String, string>}*/ data) {
+      const response = await api.post("/auth/verify-forgot-password", data);
+      const responseData = response.data;
+      if (responseData?.success) {
+        notify.success("Password reset! Login. 🥳");
+        return "SUCCESS";
+      }
+      notify.info("Error occured! Try again. ☺️");
+    }),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["profile"] });
+    },
+  });
+
+  return { loading, verifyPasswordReset };
+}

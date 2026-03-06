@@ -12,7 +12,7 @@ export default function AuthMiddleware({ children }) {
 
   useEffect(() => {
     if (!token) {
-      notify.info("Please login!");
+      notify.info("Login to continue!");
       if (window.location.pathname !== "/login") {
         window.location.href = "/login";
       }

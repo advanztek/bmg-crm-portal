@@ -27,6 +27,10 @@ import {
   TextQuoteFilled,
   WrenchSettingsRegular,
   CircleSparkleRegular,
+  PersonRegular,
+  BuildingHomeRegular,
+  GridDotsRegular,
+  PaymentRegular,
 } from "@fluentui/react-icons";
 
 /** @typedef {import("@/types/global.d.js").NavItem} NavItemProps */
@@ -59,14 +63,8 @@ export function useNavigationMenu() {
       { label: "Overview", path: "/", icon: GlanceRegular },
       { label: "Tasks", path: "/tasks", icon: TextBulletListSquareRegular, color: "#00FF5E" },
       {
-        label: "Companies",
-        path: "/companies",
-        icon: BuildingRegular,
-        color: "#F1592A",
-      },
-      {
-        label: "Staff",
-        path: "/staff",
+        label: "Team",
+        path: "/team",
         icon: FolderPeopleRegular,
         color: "#05A6F0",
       },
@@ -121,6 +119,47 @@ export function useNavigationMenu() {
       { label: "Automation", color: "#F1592A", path: "/automation", icon: WrenchSettingsRegular },
       { label: "Reports", color: "#00FF5E", path: "/reports", icon: DocumentLandscapeDataRegular },
       { label: "Integration", color: "#ff0099", path: "/integration", icon: CircleSparkleRegular },
+    ],
+  };
+
+  return menu[role] || [];
+}
+
+export function useSettingsMenu() {
+  const role = "customer";
+
+  /**
+   * @type {{
+   *  admin?: NavItemProps[],
+   *  customer?: NavItemProps[]
+   * }}
+   */
+  const menu = {
+    admin: [
+      { label: "Account", path: "/settings/account", icon: PersonRegular },
+      {
+        label: "Organization",
+        path: "",
+        icon: BuildingHomeRegular,
+        sub: [
+          { label: "General", path: "/settings/organization/general", icon: GridDotsRegular },
+          { label: "Members", path: "/settings/organization/members", icon: PeopleRegular },
+          { label: "Billing", path: "/settings/organization/billing", icon: PaymentRegular },
+        ],
+      },
+    ],
+    customer: [
+      { label: "Account", path: "/settings/account", icon: PersonRegular },
+      {
+        label: "Organization",
+        path: "",
+        icon: BuildingRegular,
+        sub: [
+          { label: "General", path: "/settings/organization/general", icon: GridDotsRegular },
+          { label: "Members", path: "/settings/organization/members", icon: PeopleRegular },
+          { label: "Billing", path: "/settings/organization/billing", icon: PaymentRegular },
+        ],
+      },
     ],
   };
 

@@ -3,7 +3,7 @@ import axios from "axios";
 import { notification } from "./notification";
 
 export const api = axios.create({
-  baseURL: "https://bmg-crm.onrender.com/V1/api",
+  baseURL: "https://crm-backend.bmg.africa/V1/api",
   withCredentials: true,
 });
 
@@ -23,12 +23,12 @@ api.interceptors.response.use(
     const status = error?.response?.status;
 
     if (error?.code === "ERR_NETWORK") {
-      notification.info("Connection error, please try again!");
+      notification.info("Connection error, try again!");
       return Promise.reject(error);
     }
 
     if (status === 401) {
-      notification.error("Session expired. Please login again.");
+      notification.error("Session expired. Login again.");
 
       const { clearAuth } = useAuthStore.getState();
       clearAuth();

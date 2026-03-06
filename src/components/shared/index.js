@@ -7,3 +7,4 @@ export { default as ActionButton } from "./ActionButton";
 export { default as Crumb } from "./Crumb";
 export { default as Toolbar } from "./Toolbar";
 export { default as Dropdown } from "./Dropdown";
+export { default as NavLink } from "./NavLink";

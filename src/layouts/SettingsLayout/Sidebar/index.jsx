@@ -1,13 +1,12 @@
 import { Box, Stack } from "@mui/material";
-import { ArrowExitFilled } from "@fluentui/react-icons";
+import { ArrowEnterLeftRegular } from "@fluentui/react-icons";
 import { useRef, useState } from "react";
 import { spacingTokens } from "@/lib/theme";
-import { useNavigationMenu } from "@/lib/navigation";
+import { useSettingsMenu } from "@/lib/navigation";
 import { useLocation, useNavigate } from "react-router-dom";
 import { footerHeight, headerHeight } from "./lib";
 import { useColor } from "@/contexts/color";
-import { useLogOut } from "@/queries/auth";
-import { ScreenLoader } from "@/components/ui";
+import { Typography } from "@/components/ui";
 import { NavLink } from "@/components/shared";
 
 /** @typedef {import("@/types/global.d").NavItem} NavItemProps */
@@ -15,15 +14,13 @@ export default function Sidebar() {
   /** @type {React.RefObject<HTMLDivElement | null>} */
   const navRef = useRef(null);
 
-  const menu = useNavigationMenu();
+  const menu = useSettingsMenu();
   const { pathname } = useLocation();
   const navigate = useNavigate();
 
-  const { status, theme } = useColor();
+  const { fg } = useColor();
 
   const [selected, setSelected] = useState(/** @type {number | null} */ (null));
-
-  const { loading: logoutLoading, logOut } = useLogOut();
 
   /**
    * @param {NavItemProps} item
@@ -44,19 +41,33 @@ export default function Sidebar() {
     navigate(item?.path);
   }
 
-  async function handleLogout() {
-    await logOut();
+  function goToDashboard() {
+    navigate("/");
   }
 
   return (
     <>
       <Box ref={navRef} sx={{ height: "100svh" }}>
-        <Stack display="flex" alignItems="center" justifyContent="center" height={headerHeight}>
-          <Box
-            component="img"
-            height="25px"
-            src={theme === "dark" ? "/logo-light.png" : "/logo-dark.png"}
-          ></Box>
+        <Stack
+          direction="row"
+          display="flex"
+          alignItems="center"
+          height={headerHeight}
+          gap={spacingTokens.sm}
+          sx={{
+            px: spacingTokens.sm,
+          }}
+        >
+          <ArrowEnterLeftRegular
+            color={fg.tertiary}
+            fontSize={20}
+            style={{ cursor: "pointer" }}
+            onClick={goToDashboard}
+          ></ArrowEnterLeftRegular>
+          <Box component="img" height="20px" src="/logo-icon.png"></Box>
+          <Typography fontWeight={600} sx={{ userSelect: "none" }}>
+            Settings
+          </Typography>
         </Stack>
 
         <Box
@@ -105,25 +116,7 @@ export default function Sidebar() {
             </Stack>
           ))}
         </Box>
-
-        <Stack
-          direction="row"
-          display="flex"
-          alignItems="center"
-          justifyContent="end"
-          height={footerHeight}
-          px={spacingTokens.sm}
-        >
-          <ArrowExitFilled
-            color={status.error.primary}
-            fontSize={20}
-            style={{ cursor: "pointer" }}
-            onClick={handleLogout}
-          ></ArrowExitFilled>
-        </Stack>
       </Box>
-
-      {logoutLoading && <ScreenLoader open message="Logging out... 🤯" />}
     </>
   );
 }

@@ -4,13 +4,15 @@ import { useColor } from "@/contexts/color";
 import { Box, Stack } from "@mui/material";
 import { useForm } from "@/lib/form";
 import { rules } from "./lib";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useLogin } from "@/queries/auth";
 import { filterObj } from "@/helpers/validation";
 
 export default function LoginPage() {
   const [params] = useSearchParams();
   const otpEnabled = params.get("otp_enabled");
+
+  const navigate = useNavigate();
 
   const { fg, main } = useColor();
   const { loading, login } = useLogin();
@@ -27,6 +29,10 @@ export default function LoginPage() {
   async function handleSubmit() {
     if (!validateForm()) return;
     await login(filterObj(formData));
+  }
+
+  function goToPasswordReset() {
+    navigate("/password/reset");
   }
 
   return (
@@ -69,6 +75,7 @@ export default function LoginPage() {
             component="span"
             fontWeight={500}
             color={main.primary}
+            onClick={goToPasswordReset}
             sx={{ textDecoration: "underline", cursor: "pointer" }}
           >
             Reset

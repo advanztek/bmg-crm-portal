@@ -23,6 +23,7 @@ export default function NavLink({
   subNavOpen = false,
 }) {
   const { elevate, shadow, fg, theme } = useColor();
+  const hasSubNav = nav?.sub && nav?.sub?.length > 0;
 
   return (
     <Box
@@ -36,7 +37,8 @@ export default function NavLink({
         width: "100%",
         fontWeight: 400,
         py: y,
-        px: x,
+        pl: x,
+        pr: hasSubNav ? `calc(${x} + 14px)` : x,
         lineHeight: 1,
         verticalAlign: "middle",
         backgroundColor: active ? elevate.primary : "transparent",
@@ -83,10 +85,10 @@ export default function NavLink({
       >
         {nav?.label}
       </Box>
-      {nav?.sub && nav?.sub?.length > 0 && (
+      {hasSubNav && (
         <Stack alignItems="center" justifyContent="center" component="div" className="indicator">
           <ChevronLeftFilled
-            fontSize={12}
+            fontSize={14}
             style={{
               backgroundColor:
                 theme === "light" ? "rgba(0, 0, 0, 0.1)" : "rgba(255, 255, 255, 0.1)",

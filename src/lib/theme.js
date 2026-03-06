@@ -699,7 +699,7 @@ export const radiusTokens = {
   "5xl": radius[12],
 };
 
-export const inputHeight = "34px";
+export const inputHeight = "30px";
 export const dashboardNavHeight = "40px";
 
 export const elevateColors = {

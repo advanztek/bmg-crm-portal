@@ -1,4 +1,9 @@
-import { BuildingRegular, CheckboxCheckedRegular, GlanceRegular } from "@fluentui/react-icons";
+import {
+  BuildingRegular,
+  CheckboxCheckedRegular,
+  GlanceRegular,
+  PersonRegular,
+} from "@fluentui/react-icons";
 
 /** @type {Record<string, import("@mui/material").ChipProps["color"]>} */
 export const TASK_STATUS_VARIANT = {
@@ -37,5 +42,9 @@ export const namedRoutes = {
   "/companies": {
     label: "Companies",
     icon: BuildingRegular,
+  },
+  "/settings/account": {
+    label: "Account",
+    icon: PersonRegular,
   },
 };

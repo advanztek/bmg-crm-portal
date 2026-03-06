@@ -67,7 +67,7 @@ export const useRequest = () => {
               return errorResult;
             }
           } else if (method !== "GET") {
-            notify.error(message || "A technical error occured! Please try again.");
+            notify.error(message || "A technical error occured! Try again.");
           }
 
           if (options.rethrow) return Promise.reject(error);

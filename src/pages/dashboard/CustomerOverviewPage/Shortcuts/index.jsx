@@ -27,6 +27,7 @@ export default function Shortcuts() {
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
+              cursor: "pointer",
             }}
           >
             <item.icon fontSize={32} color={item.color}></item.icon>

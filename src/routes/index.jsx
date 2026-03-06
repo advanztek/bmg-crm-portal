@@ -1,5 +1,5 @@
-import { AuthLayout, DashboardLayout } from "@/layouts";
-import { LoginPage } from "@/pages/auth";
+import { AuthLayout, DashboardLayout, SettingsLayout } from "@/layouts";
+import { ResetPasswordPage, LoginPage } from "@/pages/auth";
 import {
   AdminOverviewPage,
   CompaniesPage,
@@ -7,6 +7,7 @@ import {
   DesignSystemPage,
   TasksPage,
 } from "@/pages/dashboard";
+import { VendorAccountPage } from "@/pages/settings";
 import { Routes as BaseRoutes, Route } from "react-router-dom";
 
 export default function Routes() {
@@ -34,6 +35,13 @@ export default function Routes() {
       <Route element={<AuthLayout />}>
         <>
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/password/reset" element={<ResetPasswordPage />} />
+        </>
+      </Route>
+
+      <Route element={<SettingsLayout />}>
+        <>
+          <Route path="/settings/account" element={<VendorAccountPage />} />
         </>
       </Route>
     </BaseRoutes>

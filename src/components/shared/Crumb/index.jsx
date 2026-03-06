@@ -8,8 +8,9 @@ import { Box } from "@mui/material";
  * @param {Object} props
  * @param {boolean} props.active
  * @param {Omit<NavProps, "path" | "sub">} props.nav
+ * @param {string} [props.height]
  */
-export default function Crumb({ active, nav }) {
+export default function Crumb({ active, nav, height = dashboardNavHeight }) {
   const { fg, main, shadow, elevate } = useColor();
 
   return (
@@ -19,7 +20,7 @@ export default function Crumb({ active, nav }) {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        height: dashboardNavHeight,
+        height: height,
         "&::before": {
           content: '""',
           display: active ? "block" : "none",

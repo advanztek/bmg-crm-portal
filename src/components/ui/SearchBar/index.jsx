@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { SearchRegular, DismissRegular } from "@fluentui/react-icons";
-import { Box } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
 import { useColor } from "@/contexts/color";
 import { actionSizes, radius, radiusTokens, spacingTokens, typefaces } from "@/lib/theme";
 
@@ -8,8 +8,10 @@ import { actionSizes, radius, radiusTokens, spacingTokens, typefaces } from "@/l
  * @param {Object} props
  * @param {string} props.value
  * @param {(value: string) => void} props.onChange
+ * @param {string} [props.size]
  */
-export default function SearchBar({ value, onChange }) {
+export default function SearchBar({ value, onChange, size = actionSizes.small }) {
+  const theme = useTheme();
   const { main, border, fg, bg, shadow } = useColor();
   const [isOpen, setIsOpen] = useState(false);
   /** @type {React.RefObject<HTMLInputElement | null>} */
@@ -44,8 +46,8 @@ export default function SearchBar({ value, onChange }) {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          width: actionSizes.small,
-          height: actionSizes.small,
+          width: size,
+          height: size,
           borderRadius: radiusTokens.md,
           border: "1px solid",
           borderColor: isOpen ? ACCENT : border.primary,
@@ -78,7 +80,7 @@ export default function SearchBar({ value, onChange }) {
           borderRadius: radius[1],
           gap: spacingTokens.sm,
           boxShadow: shadow.default,
-          height: actionSizes.small,
+          height: size,
           px: spacingTokens.sm,
           overflow: "hidden",
           pointerEvents: isOpen ? "all" : "none",
