@@ -7,8 +7,9 @@ import { getInitial } from "@/helpers/text";
  * @param {string} [props.imageUrl]
  * @param {number} [props.size]
  * @param {boolean} [props.round]
+ * @param {(e: React.MouseEvent<HTMLDivElement>) => void} [props.onClick]
  */
-export default function Avatar({ name, imageUrl, size = 28, round = false }) {
+export default function Avatar({ name, imageUrl, size = 28, round = false, onClick }) {
   const unitSize = `${size}px`;
 
   if (imageUrl) {
@@ -16,6 +17,7 @@ export default function Avatar({ name, imageUrl, size = 28, round = false }) {
       <img
         src={imageUrl}
         alt={name}
+        onClick={onClick}
         style={{
           width: unitSize,
           height: unitSize,
@@ -33,6 +35,7 @@ export default function Avatar({ name, imageUrl, size = 28, round = false }) {
 
   return (
     <div
+      onClick={onClick}
       style={{
         width: unitSize,
         height: unitSize,

@@ -138,26 +138,26 @@ export function useSettingsMenu() {
     admin: [
       { label: "Account", path: "/settings/account", icon: PersonRegular },
       {
-        label: "Organization",
+        label: "company",
         path: "",
         icon: BuildingHomeRegular,
         sub: [
-          { label: "General", path: "/settings/organization/general", icon: GridDotsRegular },
-          { label: "Members", path: "/settings/organization/members", icon: PeopleRegular },
-          { label: "Billing", path: "/settings/organization/billing", icon: PaymentRegular },
+          { label: "General", path: "/settings/company/general", icon: GridDotsRegular },
+          { label: "Members", path: "/settings/company/members", icon: PeopleRegular },
+          { label: "Billing", path: "/settings/company/billing", icon: PaymentRegular },
         ],
       },
     ],
     customer: [
       { label: "Account", path: "/settings/account", icon: PersonRegular },
       {
-        label: "Organization",
+        label: "Company",
         path: "",
         icon: BuildingRegular,
         sub: [
-          { label: "General", path: "/settings/organization/general", icon: GridDotsRegular },
-          { label: "Members", path: "/settings/organization/members", icon: PeopleRegular },
-          { label: "Billing", path: "/settings/organization/billing", icon: PaymentRegular },
+          { label: "General", path: "/settings/company/general", icon: GridDotsRegular },
+          { label: "Members", path: "/settings/company/members", icon: PeopleRegular },
+          { label: "Billing", path: "/settings/company/billing", icon: PaymentRegular },
         ],
       },
     ],

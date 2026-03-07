@@ -4,7 +4,7 @@ import { useRef, useState } from "react";
 import { spacingTokens } from "@/lib/theme";
 import { useSettingsMenu } from "@/lib/navigation";
 import { useLocation, useNavigate } from "react-router-dom";
-import { footerHeight, headerHeight } from "./lib";
+import { headerHeight } from "./lib";
 import { useColor } from "@/contexts/color";
 import { Typography } from "@/components/ui";
 import { NavLink } from "@/components/shared";
@@ -52,28 +52,31 @@ export default function Sidebar() {
           direction="row"
           display="flex"
           alignItems="center"
+          justifyContent="space-between"
           height={headerHeight}
           gap={spacingTokens.sm}
           sx={{
             px: spacingTokens.sm,
           }}
         >
+          <Stack direction="row" alignItems="center" gap={spacingTokens.sm}>
+            <Box component="img" height="20px" src="/logo-icon.png"></Box>
+            <Typography fontWeight={600} sx={{ userSelect: "none" }}>
+              Settings
+            </Typography>
+          </Stack>
           <ArrowEnterLeftRegular
             color={fg.tertiary}
             fontSize={20}
             style={{ cursor: "pointer" }}
             onClick={goToDashboard}
           ></ArrowEnterLeftRegular>
-          <Box component="img" height="20px" src="/logo-icon.png"></Box>
-          <Typography fontWeight={600} sx={{ userSelect: "none" }}>
-            Settings
-          </Typography>
         </Stack>
 
         <Box
           sx={{
             px: spacingTokens.sm,
-            height: `calc(100svh - (${headerHeight} + ${footerHeight}))`,
+            height: `calc(100svh - ${headerHeight})`,
             overflowY: "auto",
             display: "flex",
             flexDirection: "column",
@@ -98,7 +101,8 @@ export default function Sidebar() {
                   gap={spacingTokens.sm}
                   sx={{
                     maxHeight: selected === index ? "500px" : "0px",
-                    overflow: "hidden",
+                    overflowY: "hidden",
+                    overflowX: "visible",
                     transition: "max-height 0.35s ease-in-out",
                   }}
                 >

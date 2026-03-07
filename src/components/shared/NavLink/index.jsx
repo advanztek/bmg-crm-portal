@@ -22,7 +22,7 @@ export default function NavLink({
   x = spacing[3],
   subNavOpen = false,
 }) {
-  const { elevate, shadow, fg, theme } = useColor();
+  const { elevate, shadow, fg, theme, main } = useColor();
   const hasSubNav = nav?.sub && nav?.sub?.length > 0;
 
   return (
@@ -38,7 +38,7 @@ export default function NavLink({
         fontWeight: 400,
         py: y,
         pl: x,
-        pr: hasSubNav ? `calc(${x} + 14px)` : x,
+        pr: hasSubNav ? `calc(${x} + 16px)` : x,
         lineHeight: 1,
         verticalAlign: "middle",
         backgroundColor: active ? elevate.primary : "transparent",
@@ -66,12 +66,19 @@ export default function NavLink({
             ? "translateY(-50%) rotate(90deg)"
             : "translateY(-50%) rotate(0deg)",
           transition: "transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+          height: "16px",
+          width: "16px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          borderRadius: "6px",
+          backgroundColor: theme === "light" ? "rgba(0, 0, 0, 0.1)" : "rgba(255, 255, 255, 0.1)",
         },
       }}
     >
       <nav.icon
         fontSize={18}
-        style={{ display: "block", color: nav?.color ? nav.color : fg.secondary }}
+        style={{ display: "block", color: nav?.color ? nav.color : main.primary }}
       ></nav.icon>
       <Box
         component="span"
@@ -87,14 +94,7 @@ export default function NavLink({
       </Box>
       {hasSubNav && (
         <Stack alignItems="center" justifyContent="center" component="div" className="indicator">
-          <ChevronLeftFilled
-            fontSize={14}
-            style={{
-              backgroundColor:
-                theme === "light" ? "rgba(0, 0, 0, 0.1)" : "rgba(255, 255, 255, 0.1)",
-              borderRadius: "4px",
-            }}
-          ></ChevronLeftFilled>
+          <ChevronLeftFilled fontSize={12}></ChevronLeftFilled>
         </Stack>
       )}
     </Box>

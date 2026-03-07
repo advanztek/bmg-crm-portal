@@ -87,7 +87,8 @@ export default function Sidebar() {
                   gap={spacingTokens.sm}
                   sx={{
                     maxHeight: selected === index ? "500px" : "0px",
-                    overflow: "hidden",
+                    overflowY: "hidden",
+                    overflowX: "visible",
                     transition: "max-height 0.35s ease-in-out",
                   }}
                 >

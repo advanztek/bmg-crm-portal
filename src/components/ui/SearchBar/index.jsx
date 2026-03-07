@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { SearchRegular, DismissRegular } from "@fluentui/react-icons";
-import { Box, useTheme } from "@mui/material";
+import { Box } from "@mui/material";
 import { useColor } from "@/contexts/color";
 import { actionSizes, radius, radiusTokens, spacingTokens, typefaces } from "@/lib/theme";
 
@@ -11,7 +11,6 @@ import { actionSizes, radius, radiusTokens, spacingTokens, typefaces } from "@/l
  * @param {string} [props.size]
  */
 export default function SearchBar({ value, onChange, size = actionSizes.small }) {
-  const theme = useTheme();
   const { main, border, fg, bg, shadow } = useColor();
   const [isOpen, setIsOpen] = useState(false);
   /** @type {React.RefObject<HTMLInputElement | null>} */

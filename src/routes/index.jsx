@@ -7,7 +7,7 @@ import {
   DesignSystemPage,
   TasksPage,
 } from "@/pages/dashboard";
-import { VendorAccountPage } from "@/pages/settings";
+import { CompanyAccountPage, VendorAccountPage } from "@/pages/settings";
 import { Routes as BaseRoutes, Route } from "react-router-dom";
 
 export default function Routes() {
@@ -42,6 +42,7 @@ export default function Routes() {
       <Route element={<SettingsLayout />}>
         <>
           <Route path="/settings/account" element={<VendorAccountPage />} />
+          <Route path="/settings/company/general" element={<CompanyAccountPage />} />
         </>
       </Route>
     </BaseRoutes>

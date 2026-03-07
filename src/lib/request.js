@@ -5,7 +5,7 @@ import { useNotification } from "@/contexts/notification";
 /**
  * @typedef {Object} RequestOptions
  * @property {string} [pin]
- * @property {(error: unknown) => unknown} [onError]
+ * @property {(error: any) => unknown} [onError]
  * @property {() => void} [onFinally]
  * @property {boolean} [rethrow]
  */
@@ -25,6 +25,7 @@ import { useNotification } from "@/contexts/notification";
  */
 export const useRequest = () => {
   const notify = useNotification();
+
   const wrapper = useCallback(
     /**
      * @template {(...args: any[]) => Promise<any>} T
@@ -56,7 +57,7 @@ export const useRequest = () => {
           const message = error?.response?.data?.message;
 
           if (error?.code === "ERR_NETWORK") {
-            notify.info("No Internet! Try Again.");
+            notify.info("No Internet! Try Again. 😕");
             return;
           }
 
@@ -67,7 +68,7 @@ export const useRequest = () => {
               return errorResult;
             }
           } else if (method !== "GET") {
-            notify.error(message || "A technical error occured! Try again.");
+            notify.error(message || "A technical error occured! Try again. 😬");
           }
 
           if (options.rethrow) return Promise.reject(error);

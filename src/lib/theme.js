@@ -4,7 +4,7 @@ export const fontSizes = {
   h1: "28px",
   h2: "22x",
   h3: "16px",
-  caption: "13px",
+  caption: "12px",
   body1: "14px",
   body2: "14px",
 };
@@ -427,11 +427,13 @@ export const borderColors = {
     primary: "#E5E5E5",
     secondary: "#eeeeee",
     tertiary: "#f7f7f7",
+    faint: "rgba(0, 0, 0, 0.05)",
   },
   dark: {
     primary: "#333333",
     secondary: "#2A2A2A",
     tertiary: "#242424",
+    faint: "rgba(255, 255, 255, 0.05)",
   },
 };
 

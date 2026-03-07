@@ -51,6 +51,12 @@ export default function AddCompanyModal({ open, onClose }) {
           label="Industry"
           value={() => ""}
           onChange={() => console.log("dfdf")}
+          onBlur={() => console.log("dfdf")}
+          options={["Algeria", "Ghana", "South Africa"]}
+          renderOption={(option) => ({
+            label: option,
+            value: option,
+          })}
         />
       </Stack>
     </ModalLayout>

@@ -89,15 +89,31 @@ export function useVerifyPasswordReset() {
   const notify = useNotification();
 
   const { isPending: loading, mutateAsync: verifyPasswordReset } = useMutation({
-    mutationFn: request(async function (/**@type {Record<String, string>}*/ data) {
-      const response = await api.post("/auth/verify-forgot-password", data);
-      const responseData = response.data;
-      if (responseData?.success) {
-        notify.success("Password reset! Login. 🥳");
-        return "SUCCESS";
-      }
-      notify.info("Error occured! Try again. ☺️");
-    }),
+    mutationFn: request(
+      async function (/**@type {Record<String, string>}*/ data) {
+        const response = await api.post("/auth/verify-forgot-password", data);
+        const responseData = response.data;
+        if (responseData?.success) {
+          notify.success("Password reset! Login. 🥳");
+          return "SUCCESS";
+        }
+        notify.info("Error occured! Try again. ☺️");
+      },
+      {
+        onError: (error) => {
+          const responseData = error?.response?.data;
+          console.log("Reset password response data");
+          console.log(responseData);
+
+          if (responseData?.error == 3) {
+            notify.error("Code has expired! Enter your email. 🫩");
+            return;
+          }
+          const message = responseData?.message;
+          notify.error(message || "Verification failed! 🫩");
+        },
+      },
+    ),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["profile"] });
     },

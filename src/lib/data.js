@@ -47,4 +47,8 @@ export const namedRoutes = {
     label: "Account",
     icon: PersonRegular,
   },
+  "/settings/company/general": {
+    label: "Company",
+    icon: BuildingRegular,
+  },
 };

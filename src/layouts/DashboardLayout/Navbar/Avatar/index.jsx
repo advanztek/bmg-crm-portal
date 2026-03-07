@@ -1,5 +1,5 @@
 import { Dropdown } from "@/components/shared";
-import { actionSizes } from "@/lib/theme";
+import { Avatar as BaseAvatar } from "@/components/ui";
 import { BuildingRegular, SettingsRegular } from "@fluentui/react-icons";
 import { Box } from "@mui/material";
 import { useState } from "react";
@@ -32,17 +32,12 @@ export default function Avatar() {
 
   return (
     <Box>
-      <Box
-        component="img"
-        src="/avatar.png"
+      <BaseAvatar
+        size={26}
+        imageUrl="/avatar.png"
+        name="Avatar"
         onClick={(e) => setAnchorEl(e.currentTarget)}
-        sx={{
-          borderRadius: "999px",
-          height: actionSizes.small,
-          width: actionSizes.small,
-          cursor: "pointer",
-        }}
-      ></Box>
+      />
       <Dropdown
         open={isOpen}
         anchorEl={anchorEl}

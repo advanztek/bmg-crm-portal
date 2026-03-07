@@ -476,7 +476,7 @@ function configureTheme({
           root: {
             fontSize: fontSizes.caption,
             lineHeight: 1,
-            fontWeight: 500,
+            fontWeight: 600,
             color: input.outlined.default.fg,
             "& .MuiFormLabel-asterisk": {
               color: main.error,
@@ -748,6 +748,14 @@ function configureTheme({
             backgroundColor:
               mode === "dark" ? "rgba(155, 162, 176, 0.7)" : "rgba(255, 255, 255, 0.7)",
             backdropFilter: "none",
+          },
+        },
+      },
+      MuiDivider: {
+        styleOverrides: {
+          root: {
+            borderBottomWidth: "1px",
+            borderBottomColor: border.faint,
           },
         },
       },
