@@ -1,9 +1,12 @@
 import { Button, Typography, Input, Avatar, Select } from "@/components/ui";
+import { useColor } from "@/contexts/color";
 import { spacingTokens } from "@/lib/theme";
 import { AddRegular, SendRegular, SubtractRegular } from "@fluentui/react-icons";
 import { Box, Stack } from "@mui/material";
 
 export default function CompanyAccountPage() {
+  const { border } = useColor();
+
   return (
     <Stack gap={spacingTokens.xl}>
       <Stack direction="row" alignItems="stretch" gap={spacingTokens.md}>
@@ -26,17 +29,30 @@ export default function CompanyAccountPage() {
       <Box
         display="grid"
         gridTemplateColumns={{ xs: "1fr", md: "repeat(3, 1fr)" }}
-        gap={spacingTokens.xl}
+        rowGap={{ xs: spacingTokens.xl, md: 0 }}
       >
-        <Stack gap={spacingTokens.lg}>
+        <Stack gap={spacingTokens.lg} pr={{ xs: 0, md: spacingTokens.lg }}>
+          <Typography variant="h2" fontWeight={600} color="secondary">
+            Profile
+          </Typography>
           <Input name="max_users" label="Size" value={(name) => ""} />
           <Input name="name" label="Name" value={(name) => ""} />
           <Input name="phone" label="Phone" value={(name) => ""} />
-          <Input name="website" label="Website" value={(name) => ""} />
-        </Stack>
-        <Stack gap={spacingTokens.lg}>
+
           <Input name="about" label="About" multiline rows={2} value={(name) => ""} />
-          <Input name="address" label="Address" multiline rows={3} value={(name) => ""} />
+        </Stack>
+        <Stack
+          gap={spacingTokens.lg}
+          px={{ xs: 0, md: spacingTokens.lg }}
+          sx={{
+            borderLeft: { xs: "none", md: `1px solid ${border.faint}` },
+            borderRight: { xs: "none", md: `1px solid ${border.faint}` },
+          }}
+        >
+          <Typography variant="h2" fontWeight={600} color="secondary">
+            Address
+          </Typography>
+          <Input name="website" label="Website" value={(name) => ""} />
           <Select
             name="country"
             label="Country"
@@ -50,7 +66,10 @@ export default function CompanyAccountPage() {
             })}
           />
         </Stack>
-        <Stack gap={spacingTokens.lg}>
+        <Stack gap={spacingTokens.lg} pl={{ xs: 0, md: spacingTokens.lg }}>
+          <Typography variant="h2" fontWeight={600} color="secondary">
+            Socials
+          </Typography>
           <Input name="facebook" label="Facebook" value={(name) => ""} />
           <Input name="twitter" label="Twitter" value={(name) => ""} />
           <Input name="instagram" label="Instagram" value={(name) => ""} />

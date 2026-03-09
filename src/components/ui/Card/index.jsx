@@ -4,7 +4,7 @@ import { Card as BaseCard } from "@mui/material";
 /**
  * @param {import("@mui/material").CardProps & { round?: keyof radius }} props
  */
-export default function Card({ children, round = 3, ...props }) {
+export default function Card({ children, round = 8, ...props }) {
   return (
     <BaseCard
       {...props}

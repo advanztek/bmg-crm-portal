@@ -18,7 +18,9 @@ export function useLogin() {
       const responseData = response.data;
       if (responseData?.success && responseData?.result?.token) {
         const result = responseData?.result;
-        setAuth({ user: result?.user, token: result?.token });
+        console.log("Login result ");
+        console.log(result);
+        setAuth({ user: result?.user, token: result?.token, permission: result?.permissions });
         notify.success("Login successful! 🥳");
         navigate("/");
         return;

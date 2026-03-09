@@ -28,14 +28,13 @@ api.interceptors.response.use(
     }
 
     if (status === 401) {
-      notification.error("Session expired. Login again. 😬");
-
       const { clearAuth } = useAuthStore.getState();
       clearAuth();
 
       if (window.location.pathname !== "/login") {
         window.location.href = "/login";
       }
+      notification.error("Session expired. Login again. 😬");
     }
 
     if (status === 403) {

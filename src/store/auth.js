@@ -6,10 +6,15 @@ import { persist } from "zustand/middleware";
  */
 
 /**
+ * @typedef {Record<string, any>} Permission
+ */
+
+/**
  * @typedef {Object} AuthState
  * @property {User|null} user - The currently authenticated user
  * @property {string|null} token - The authentication token
- * @property {function({ user: User, token: string }): void} setAuth - Sets the authenticated user and token
+ * @property {Permission|null} permission - The authenticated user permissions
+ * @property {function({ user: User, token: string, permission: Permission }): void} setAuth - Sets the authenticated user and token
  * @property {function(): void} clearAuth - Clears the authenticated user and token
  */
 
@@ -23,11 +28,15 @@ export const useAuthStore = create(
       /** @type {string|null} */
       token: null,
 
-      /** @param {{ user: User, token: string }} auth */
-      setAuth: ({ user, token }) =>
+      /** @type {Permission|null} */
+      permission: null,
+
+      /** @param {{ user: User, token: string, permission: Permission }} auth */
+      setAuth: ({ user, token, permission }) =>
         set({
           user,
           token,
+          permission,
         }),
 
       clearAuth: () =>

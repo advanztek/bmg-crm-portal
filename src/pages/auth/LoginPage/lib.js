@@ -1,4 +1,4 @@
-import { validateEmail, validatePassword } from "@/helpers/validation";
+import { validateEmail } from "@/helpers/validation";
 
 /**
  * @param {Object} props
@@ -11,13 +11,7 @@ export function rules({ otpEnabled }) {
       (/** @type {string} */ value) =>
         !validateEmail(value) ? `"${value}" is not a valid email. e.g "johndoe@gmail.com"` : null,
     ],
-    password: [
-      (/** @type {string} */ value) => (!value ? "Enter account password" : null),
-      (/** @type {string} */ value) =>
-        !validatePassword(value)
-          ? "Password must be 8+ characters, with uppercase, lowercase, and a symbol (!@#$%^&*)"
-          : null,
-    ],
+    password: [(/** @type {string} */ value) => (!value ? "Enter account password" : null)],
     otp: [
       (/** @type {string} */ value) =>
         otpEnabled && (!value || value.length != 6) ? "OTP must be 6 letters" : null,

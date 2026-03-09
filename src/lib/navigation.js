@@ -1,3 +1,4 @@
+import { useAuthStore } from "@/store/auth";
 import {
   AppsListRegular,
   BuildingRegular,
@@ -6,7 +7,6 @@ import {
   CubeRegular,
   DataPieRegular,
   DeleteRegular,
-  DiversityRegular,
   DocumentFolderRegular,
   DocumentLandscapeDataRegular,
   DocumentSquareRegular,
@@ -31,32 +31,21 @@ import {
   BuildingHomeRegular,
   GridDotsRegular,
   PaymentRegular,
+  PersonStarRegular,
 } from "@fluentui/react-icons";
+import { ROLES } from "./data";
 
 /** @typedef {import("@/types/global.d.js").NavItem} NavItemProps */
 
 export function useNavigationMenu() {
-  const role = "customer";
+  const { permission } = useAuthStore.getState();
+  const role = ROLES[`${permission?.role_id}:${permission?.subrole_id}`];
 
-  /**
-   * @type {{
-   *  admin?: NavItemProps[],
-   *  customer?: NavItemProps[]
-   * }}
-   */
+  /** @type {any} */
   const menu = {
-    admin: [
+    platform_super_admin: [
       { label: "Overview", path: "/", icon: GlanceRegular },
-      { label: "Users", path: "/users", icon: PeopleRegular },
-      {
-        label: "Category",
-        path: "/category",
-        icon: DiversityRegular,
-        sub: [
-          { label: "Sub Category", path: "/category/sub-category", icon: DiversityRegular },
-          { label: "Add Category", path: "/category/add-category", icon: DiversityRegular },
-        ],
-      },
+      { label: "Admins", path: "/admins", icon: PersonStarRegular },
       { label: "Settings", path: "/settings", icon: SettingsRegular },
     ],
     customer: [
@@ -122,7 +111,7 @@ export function useNavigationMenu() {
     ],
   };
 
-  return menu[role] || [];
+  return menu?.[role] || [];
 }
 
 export function useSettingsMenu() {

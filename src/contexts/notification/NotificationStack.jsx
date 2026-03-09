@@ -11,7 +11,7 @@ export default function NotificationStack({ notifications, remove, peekSize = 3 
   const theme = useTheme();
 
   return (
-    <div className="notification-container" style={{ zIndex: theme.zIndex.appBar }}>
+    <div className="notification-container" style={{ zIndex: theme.zIndex.modal + 1 }}>
       {notifications.map((n, index) => {
         const visibleIndex = Math.min(index, peekSize - 1);
 
