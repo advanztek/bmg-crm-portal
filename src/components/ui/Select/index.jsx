@@ -19,6 +19,7 @@ import {
  * @property {(name: string, value: any) => void} onBlur - Callback fired when the select loses focus.
  * @property {string} name - The name of the field, used for value/error lookups.
  * @property {(name: string) => any} value - Function that returns the current value for the given field name.
+ * @property {boolean} [loading] Determines if input is loading.
  */
 
 /**
@@ -36,6 +37,7 @@ export default function Select({
   onChange,
   value,
   variant = "outlined",
+  loading,
   ...rest
 }) {
   const _error = error ? error(name) : null;

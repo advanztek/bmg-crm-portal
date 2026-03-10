@@ -31,7 +31,7 @@ export function validatePassword(password) {
  */
 export function validatePhoneNumber(number) {
   if (!number) return false;
-  return /^\+?[1-9]\d{6,11}$/.test(number);
+  return /^[1-9]\d{6,11}$/.test(number);
 }
 
 /**
