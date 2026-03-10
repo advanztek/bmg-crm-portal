@@ -3,7 +3,7 @@ import axios from "axios";
 import { notification } from "./notification";
 
 export const api = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL,
+  baseURL: "http://localhost:4000/V1/api",
   withCredentials: true,
 });
 
