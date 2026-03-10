@@ -5,6 +5,9 @@ import {
   CompaniesPage,
   CustomerOverviewPage,
   DesignSystemPage,
+  InvoicePage,
+  LeadsPage,
+  QuotationPage,
   TasksPage,
 } from "@/pages/dashboard";
 import { CompanyAccountPage, VendorAccountPage } from "@/pages/settings";
@@ -28,6 +31,9 @@ export default function Routes() {
             <Route path="/tasks" element={<TasksPage />} />
             <Route path="/" element={<CustomerOverviewPage />} />
             <Route path="/companies" element={<CompaniesPage />} />
+            <Route path="/leads" element={<LeadsPage />} />
+            <Route path="/quotations" element={<QuotationPage />} />
+            <Route path="/invoices" element={<InvoicePage />} />
           </>
         )}
       </Route>

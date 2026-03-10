@@ -3,6 +3,9 @@ import {
   CheckboxCheckedRegular,
   GlanceRegular,
   PersonRegular,
+  ReceiptRegular,
+  TargetRegular,
+  TextQuoteFilled,
 } from "@fluentui/react-icons";
 
 /** @type {Record<string, import("@mui/material").ChipProps["color"]>} */
@@ -38,6 +41,18 @@ export const namedRoutes = {
   "/tasks": {
     label: "Tasks",
     icon: CheckboxCheckedRegular,
+  },
+  "/leads": {
+    label: "Leads",
+    icon: TargetRegular,
+  },
+  "/quotations": {
+    label: "Quotations",
+    icon: TextQuoteFilled,
+  },
+  "/invoices": {
+    label: "Invoices",
+    icon: ReceiptRegular,
   },
   "/companies": {
     label: "Companies",
