@@ -18,9 +18,10 @@ export function validatePassword(password) {
   const hasUppercase = /[A-Z]/.test(password);
   const hasLowercase = /[a-z]/.test(password);
   const hasNumber = /\d/.test(password);
-  const hasSpecialSymbol = /[!@#$%^&*(),\-.?":{}|<>]/.test(password);
+  // const hasSpecialSymbol = /[!@#$%^&*(),\-.?":{}|<>]/.test(password);
 
-  return hasUppercase && hasLowercase && hasNumber && hasSpecialSymbol;
+  // return hasUppercase && hasLowercase && hasNumber && hasSpecialSymbol;
+  return hasUppercase && hasLowercase && hasNumber;
 }
 
 /**
@@ -35,16 +36,20 @@ export function validatePhoneNumber(number) {
 }
 
 /**
- * Filter object to exclude falsy values (keeping false and 0).
+ * Filter object to exclude falsy values (keeping false and 0)
+ * and remove specified fields.
  * @param {Record<string, any>} obj
+ * @param {string[]} filterFields
  * @returns {Record<string, any>}
  */
-export function filterObj(obj) {
+export function filterObj(obj, filterFields = []) {
   if (!obj) return {};
   /** @type {any} */
   const newObj = {};
 
   for (const [key, value] of Object.entries(obj)) {
+    if (filterFields.includes(key)) continue;
+
     if (
       value === false ||
       value === 0 ||
@@ -55,4 +60,9 @@ export function filterObj(obj) {
   }
 
   return newObj;
+}
+
+export function getCountryCode() {
+  const locale = navigator.language;
+  return locale.split("-")[1];
 }

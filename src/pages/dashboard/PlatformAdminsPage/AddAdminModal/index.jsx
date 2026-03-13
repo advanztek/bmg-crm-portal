@@ -15,7 +15,7 @@ import { Stack } from "@mui/material";
 import { useForm } from "@/lib/form";
 import { rules } from "./lib";
 import { PulseLoader } from "react-spinners";
-import { useEffect, useState } from "react";
+import { useMemo } from "react";
 import { useGetCountries } from "@/queries/country";
 import { useGetRoleSubRoles } from "@/queries/auth";
 
@@ -36,23 +36,18 @@ export default function AddAdminModal({ open, onClose }) {
     },
     rules: () => rules,
   });
-  const [selectedCountry, setSelectedCountry] = useState(/** @type {any} */ (null));
+
+  const selectedCountry = useMemo(
+    () =>
+      countries?.find((/** @type {any} */ country) => country?.id == formData?.country_id) ?? null,
+    [countries, formData?.country_id],
+  );
 
   async function handleSubmit() {
     if (!validateForm()) return;
     const req = { ...formData, role_id: 1 };
     console.log(req);
   }
-
-  useEffect(() => {
-    if (formData?.country_id) {
-      setSelectedCountry(
-        countries?.find(
-          (/** @type {any} */ currentCountry) => currentCountry?.id == formData?.country_id,
-        ),
-      );
-    }
-  }, [formData?.country_id]);
 
   return (
     <ModalLayout
@@ -128,9 +123,7 @@ export default function AddAdminModal({ open, onClose }) {
           startAdornment={
             <>
               <CallRegular />
-              {selectedCountry && selectedCountry?.phone_code && (
-                <span>{selectedCountry?.phone_code}</span>
-              )}
+              {selectedCountry?.phone_code && <span>{selectedCountry.phone_code}</span>}
             </>
           }
           name="mobile"
@@ -141,7 +134,7 @@ export default function AddAdminModal({ open, onClose }) {
           onBlur={(name, value) => onBlur(name, value)}
         />
         <Select
-          startAdornment={countriesLoading ? <PulseLoader size={10} /> : <ShieldRegular />}
+          startAdornment={subRolesLoading ? <PulseLoader size={10} /> : <ShieldRegular />}
           name="subrole_id"
           label="Role"
           value={(name) => formData?.[name]}

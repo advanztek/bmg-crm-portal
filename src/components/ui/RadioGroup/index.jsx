@@ -1,27 +1,23 @@
-import {
-  FormControl,
-  FormLabel,
-  FormHelperText,
-  RadioGroup as MuiRadioGroup,
-  FormControlLabel,
-  Radio,
-} from "@mui/material";
+import { FormControl, FormLabel, FormHelperText, FormGroup, FormControlLabel } from "@mui/material";
+import { Radio } from "@/components/ui";
 
 /**
- * @typedef {object} RadioGroupProps
+ * @typedef {object} Props
  * @property {string} [label]
  * @property {(name: string) => any} [error]
  * @property {boolean} [disabled]
  * @property {string} name
  * @property {(name: string) => any} value
  * @property {(name: string, value: any) => void} [onChange]
- * @property {Array<{ label: string, value: any } | string>} options
+ * @property {any[]} options
+ * @property {(option: any) => string } renderOptionLabel
+ * @property {(option: any) => any} renderOptionValue
  * @property {boolean} [row=true]
  * @property {boolean} [fullWidth=true]
  */
 
 /**
- * @param {RadioGroupProps} props
+ * @param {Props} props
  */
 export default function RadioGroup({
   label,
@@ -30,30 +26,42 @@ export default function RadioGroup({
   value,
   onChange,
   options = [],
+  renderOptionLabel,
+  renderOptionValue,
   row = true,
   fullWidth = true,
   ...rest
 }) {
   const _error = error ? error(name) : null;
+  const selected = value(name);
+
+  const handleChange = (/** @type {any} */ optionValue) => {
+    if (!onChange) return;
+    onChange(name, optionValue);
+  };
 
   return (
     <FormControl error={!!_error} fullWidth={fullWidth}>
       {label && <FormLabel>{label}</FormLabel>}
-      <MuiRadioGroup
-        {...rest}
-        row={row}
-        name={name}
-        value={value(name) ?? ""}
-        onChange={onChange ? (e) => onChange(name, e.target.value) : undefined}
-      >
+      <FormGroup {...rest} row={row}>
         {options.map((option, i) => {
-          const optionLabel = typeof option === "object" ? option.label : option;
-          const optionValue = typeof option === "object" ? option.value : option;
+          const optionLabel = renderOptionLabel(option);
+          const optionValue = renderOptionValue(option);
           return (
-            <FormControlLabel key={i} value={optionValue} label={optionLabel} control={<Radio />} />
+            <FormControlLabel
+              key={i}
+              value={optionValue}
+              label={optionLabel}
+              control={
+                <Radio
+                  checked={selected === optionValue}
+                  onCheck={() => handleChange(optionValue)}
+                />
+              }
+            />
           );
         })}
-      </MuiRadioGroup>
+      </FormGroup>
       {_error && <FormHelperText>{_error}</FormHelperText>}
     </FormControl>
   );

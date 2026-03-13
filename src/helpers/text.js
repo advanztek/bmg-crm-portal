@@ -36,3 +36,17 @@ export function replaceCharacter(text, targetChar, replacementChar) {
 
   return text.replace(regex, replacementChar);
 }
+
+/**
+ * Converts a file to a Base64-encoded data URL string.
+ * @param {File} file - The file to convert.
+ * @returns {Promise<string>} A promise that resolves with the Base64-encoded data URL.
+ */
+export function convertToBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(/** @type {string} */ (reader.result));
+    reader.onerror = (error) => reject(error);
+  });
+}

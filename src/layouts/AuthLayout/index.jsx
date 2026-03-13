@@ -45,15 +45,15 @@ export default function AuthLayout() {
           <Stack alignItems="start">
             <Box
               component="img"
-              src={isDark ? "/logo-dark.png" : "logo-dark.png"}
+              src={isDark ? "/logo-light.png" : "/logo-dark.png"}
               sx={{ height: LOGO_HEIGHT, cursor: "pointer" }}
               onClick={navigateToHome}
             />
           </Stack>
           <Stack
+            gap={spacingTokens.lg}
             sx={{
               maxHeight: `calc(100svh - ${spacingTokens.lg} - ${LOGO_HEIGHT})`,
-              overflowY: "auto",
             }}
           >
             <Outlet />

@@ -1,8 +1,9 @@
 import { AuthLayout, DashboardLayout, SettingsLayout } from "@/layouts";
-import { ResetPasswordPage, LoginPage } from "@/pages/auth";
+import { ResetPasswordPage, LoginPage, RegisterPage, VerifyEmailPage } from "@/pages/auth";
 import {
   AdminOverviewPage,
   CompaniesPage,
+  ConnectMetaAddsPage,
   CustomerOverviewPage,
   DesignSystemPage,
   IntegrationsPage,
@@ -15,36 +16,37 @@ import { Routes as BaseRoutes, Route } from "react-router-dom";
 
 export default function Routes() {
   const { permission } = useAuthStore.getState();
-  const ROLE = permission?.role_id;
-  const SUB_ROLE = permission?.subrole_id;
+  // const ROLE = permission?.role_name;
+  const ROLE = "WORKSPACE_USER";
 
   return (
     <BaseRoutes>
       <Route element={<DashboardLayout />}>
         <Route path="/design/system" element={<DesignSystemPage />} />
         {/* PLATFORM SUPER ADMIN */}
-        {ROLE == 1 && SUB_ROLE == 1 && (
+        {ROLE == "PLATFORM_ADMIN" && (
           <>
             <Route path="/" element={<AdminOverviewPage />} />
             <Route path="/admins" element={<PlatformAdminsPage />} />
           </>
         )}
 
-        {ROLE == 2 && SUB_ROLE == 17 && (
+        {ROLE == "WORKSPACE_USER" && (
           <>
             <Route path="/tasks" element={<TasksPage />} />
             <Route path="/" element={<CustomerOverviewPage />} />
             <Route path="/companies" element={<CompaniesPage />} />
             <Route path="/integrations" element={<IntegrationsPage />} />
+            <Route path="/meta-ads/connect" element={<ConnectMetaAddsPage />} />
           </>
         )}
       </Route>
 
       <Route element={<AuthLayout />}>
-        <>
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/password/reset" element={<ResetPasswordPage />} />
-        </>
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
+        <Route path="/password/reset" element={<ResetPasswordPage />} />
+        <Route path="/email/verification" element={<VerifyEmailPage />} />
       </Route>
 
       <Route element={<SettingsLayout />}>

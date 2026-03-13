@@ -8,3 +8,4 @@ export { default as Crumb } from "./Crumb";
 export { default as Toolbar } from "./Toolbar";
 export { default as Dropdown } from "./Dropdown";
 export { default as NavLink } from "./NavLink";
+export { default as AuthSlot } from "./AuthSlot";

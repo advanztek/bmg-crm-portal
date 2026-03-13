@@ -33,22 +33,22 @@ import {
   PaymentRegular,
   PersonStarRegular,
 } from "@fluentui/react-icons";
-import { ROLES } from "./data";
 
 /** @typedef {import("@/types/global.d.js").NavItem} NavItemProps */
 
 export function useNavigationMenu() {
   const { permission } = useAuthStore.getState();
-  const role = ROLES[`${permission?.role_id}:${permission?.subrole_id}`];
+  // const role = permission?.role_name;
+  const role = "WORKSPACE_USER";
 
   /** @type {any} */
   const menu = {
-    platform_super_admin: [
+    PLATFORM_ADMIN: [
       { label: "Overview", path: "/", icon: GlanceRegular, color: "#00FF5E" },
       { label: "Admins", path: "/admins", icon: PersonStarRegular, color: "#fb00ff" },
       { label: "Settings", path: "/settings", icon: SettingsRegular, color: "#05A6F0" },
     ],
-    customer: [
+    WORKSPACE_USER: [
       { label: "Overview", path: "/", icon: GlanceRegular },
       { label: "Tasks", path: "/tasks", icon: TextBulletListSquareRegular, color: "#00FF5E" },
       { label: "Companies", path: "/companies", icon: BuildingRegular, color: "#fb00ff" },

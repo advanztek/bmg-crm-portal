@@ -17,7 +17,7 @@ export default function AuthMiddleware({ children }) {
       navigate("/login");
       notify.info("Login to continue!");
     }
-  }, [token, navigate]);
+  }, [token, navigate, notify]);
 
   return children;
 }

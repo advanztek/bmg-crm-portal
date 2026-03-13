@@ -63,7 +63,6 @@ export function useLogOut() {
 }
 
 export function useResetPassword() {
-  const qc = useQueryClient();
   const { request } = useRequest();
   const notify = useNotification();
 
@@ -77,16 +76,12 @@ export function useResetPassword() {
       }
       notify.info("Error occured! Try again. ☺️");
     }),
-    onSuccess: () => {
-      qc.invalidateQueries({ queryKey: ["profile"] });
-    },
   });
 
   return { loading, resetPassword };
 }
 
 export function useVerifyPasswordReset() {
-  const qc = useQueryClient();
   const { request } = useRequest();
   const notify = useNotification();
 
@@ -114,9 +109,6 @@ export function useVerifyPasswordReset() {
         },
       },
     ),
-    onSuccess: () => {
-      qc.invalidateQueries({ queryKey: ["profile"] });
-    },
   });
 
   return { loading, verifyPasswordReset };
@@ -150,4 +142,42 @@ export function useGetRoleSubRoles(id) {
     loading,
     data,
   };
+}
+
+export function useRegister() {
+  const { request } = useRequest();
+  const notify = useNotification();
+
+  const { isPending: loading, mutateAsync: register } = useMutation({
+    mutationFn: request(async function (/**@type {Record<String, string>}*/ data) {
+      const response = await api.post("/auth/register", data);
+      const responseData = response.data;
+      if (responseData?.success) {
+        notify.success("Welcome Onboard! Verify your account. 🥳");
+        return "SUCCESS";
+      }
+      notify.info("Error occured! Try again. ☺️");
+    }),
+  });
+
+  return { loading, register };
+}
+
+export function useVerifyEmail() {
+  const { request } = useRequest();
+  const notify = useNotification();
+
+  const { isPending: loading, mutateAsync: verifyEmail } = useMutation({
+    mutationFn: request(async function (/**@type {Record<String, string>}*/ data) {
+      const response = await api.post("/auth/verify-email", data);
+      const responseData = response.data;
+      if (responseData?.success) {
+        notify.success("Welcome, Elite One! 🥳");
+        return "SUCCESS";
+      }
+      notify.info("Error occured! Try again. ☺️");
+    }),
+  });
+
+  return { loading, verifyEmail };
 }

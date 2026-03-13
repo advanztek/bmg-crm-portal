@@ -1,12 +1,13 @@
-import { Button, Input, Typography } from "@/components/ui";
-import { fontSizes, spacingTokens } from "@/lib/theme";
+import { Button, Input } from "@/components/ui";
+import { fontSizes } from "@/lib/theme";
 import { useColor } from "@/contexts/color";
-import { Box, Stack } from "@mui/material";
+import { Box } from "@mui/material";
 import { useForm } from "@/lib/form";
 import { rules } from "./lib";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useLogin } from "@/queries/auth";
 import { filterObj } from "@/helpers/validation";
+import { AuthSlot } from "@/components/shared";
 
 export default function LoginPage() {
   const [params] = useSearchParams();
@@ -36,52 +37,48 @@ export default function LoginPage() {
   }
 
   return (
-    <>
-      <Box>
-        <Typography variant="h1" lineHeight={1.5} fontWeight={500}>
-          Sell Smarter. Connect Better.
-        </Typography>
-        <Typography color="secondary" fontWeight={300} variant="h3" lineHeight={1.25}>
-          Your deals, contacts, and insights are waiting.
-        </Typography>
-      </Box>
-      <Stack gap={spacingTokens.md}>
-        <Input
-          label="Email"
-          name="email"
-          value={(name) => formData[name]}
-          onChange={(name, value) => onChange(name, value)}
-          onBlur={(name, value) => onBlur(name, value)}
-          error={(name) => formErrors?.[name]}
-        />
+    <AuthSlot
+      title="Sell Smarter. Connect Better."
+      subtitle="Your deals, contacts, and insights are waiting."
+      actions={
+        <>
+          <Button size="large" loading={loading} onClick={handleSubmit}>
+            Submit
+          </Button>
 
-        <Input
-          label="Password"
-          name="password"
-          value={(name) => formData[name]}
-          onChange={(name, value) => onChange(name, value)}
-          onBlur={(name, value) => onBlur(name, value)}
-          error={(name) => formErrors?.[name]}
-          type="password"
-        />
-
-        <Button size="large" loading={loading} onClick={handleSubmit}>
-          Submit
-        </Button>
-
-        <Box component="p" m={0} p={0} fontSize={fontSizes.caption} color={fg.primary}>
-          Forgot Password?{" "}
-          <Box
-            component="span"
-            fontWeight={500}
-            color={main.primary}
-            onClick={goToPasswordReset}
-            sx={{ textDecoration: "underline", cursor: "pointer" }}
-          >
-            Reset
+          <Box component="p" m={0} p={0} fontSize={fontSizes.caption} color={fg.primary}>
+            Forgot Password?{" "}
+            <Box
+              component="span"
+              fontWeight={500}
+              color={main.primary}
+              onClick={goToPasswordReset}
+              sx={{ textDecoration: "underline", cursor: "pointer" }}
+            >
+              Reset
+            </Box>
           </Box>
-        </Box>
-      </Stack>
-    </>
+        </>
+      }
+    >
+      <Input
+        label="Email"
+        name="email"
+        value={(name) => formData[name]}
+        onChange={(name, value) => onChange(name, value)}
+        onBlur={(name, value) => onBlur(name, value)}
+        error={(name) => formErrors?.[name]}
+      />
+
+      <Input
+        label="Password"
+        name="password"
+        value={(name) => formData[name]}
+        onChange={(name, value) => onChange(name, value)}
+        onBlur={(name, value) => onBlur(name, value)}
+        error={(name) => formErrors?.[name]}
+        type="password"
+      />
+    </AuthSlot>
   );
 }
